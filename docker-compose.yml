@@ -13,7 +13,7 @@ services:
 
 
   pg_dump:
-    build: ./
+    image: "punkoivan/pg_dump:9.4"
     environment:
      - CRON_SCHEDULE=35 17 * * *
      - PGUSER=postgres
