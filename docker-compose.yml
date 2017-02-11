@@ -1,0 +1,30 @@
+version: "2"
+services:
+  postgre:
+   image: "postgres:9.2.20-alpine"
+   environment:
+    - POSTGRES_PASSWORD=p@ssword
+    - POSTGRES_USER=postgres
+    - POSTGRES_DB=testdb
+   expose:
+    - "5452"
+   volumes:
+    - ./post:/data/post
+
+
+  pg_dump:
+    build: ./
+    environment:
+     - CRON_SCHEDULE=35 17 * * *
+     - PGUSER=postgres
+     - PGPASSWORD=p@ssword
+     - PGDATABASE=testdb
+     - PREFIX=dump-cron
+     - PGHOST=postgre
+    links:
+     - postgre 
+    volumes:
+     - ./dumps:/dump
+     - /etc/localtime:/etc/localtime
+    command: 
+     - dump-cron
