@@ -1,5 +1,5 @@
 FROM postgres:9.4
-MAINTAINER Ilya Stepanov <dev@ilyastepanov.com>
+MAINTAINER Ivan Punko <punkoivan@yandex.ru>
 
 RUN apt-get update && \
     apt-get install -y cron && \
