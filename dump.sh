@@ -10,4 +10,4 @@ FILE="/dump/$PREFIX-$DATE.sql"
 pg_dump -h "${PGHOST}" -U "${PGUSER}" -f "${FILE}" -d "${PGDATABASE}"
 gzip "$FILE"
 
-echo "Job finished at $(date)"
+echo "Job finished at $(date): db ${PGDATABASE} was back-uped to ${FILE}"

@@ -7,15 +7,12 @@ services:
     - POSTGRES_USER=postgres
     - POSTGRES_DB=testdb
    expose:
-    - "5452"
-   volumes:
-    - ./post:/data/post
+    - "5432"
 
-
-  pg_dump:
-    image: "punkoivan/pg_dump:9.4"
+  pg-dump:
+    image: "donttouchmytralala/pgsqldmpcrn:latest"
     environment:
-     - CRON_SCHEDULE=35 17 * * *
+     - CRON_SCHEDULE=*/10 * * * *
      - PGUSER=postgres
      - PGPASSWORD=p@ssword
      - PGDATABASE=testdb
@@ -24,7 +21,20 @@ services:
     links:
      - postgre 
     volumes:
-     - ./dumps:/dump
+     - /ivan:/dump
      - /etc/localtime:/etc/localtime
     command: 
      - dump-cron
+
+  pgadmin:
+    image: "jacksoncage/phppgadmin:latest"
+    environment:
+     - POSTGRES_HOST=postgre
+     - POSTGRES_PORT=5432
+     - POSTGRES_DEFAULTDB=testdb
+    volumes:
+     - /etc/localtime:/etc/localtime
+    ports:
+     - "8888:80"
+    links:
+     - postgre
